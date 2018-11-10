@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 
-mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database?authSource=leaser_database&w=1", { useNewUrlParser: true });
+mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database", { useNewUrlParser: true });
 
 app.set('view engine', 'ejs');
 
@@ -148,7 +148,7 @@ thisLocation.create(newLocation, function(err, location){
 		res.redirect("/");
 	});
 }
-    }, 3000);
+    }, 1500);
     });
 
 app.get("/", function(req, res){
