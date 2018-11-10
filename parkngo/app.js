@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 
-mongoose.connect("mongodb://andyduly:123456a@ds159273.mlab.com:59273/parkngo");
+mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database?authSource=leaser_database&w=1", { useNewUrlParser: true });
 
 app.set('view engine', 'ejs');
 
@@ -55,7 +55,7 @@ function wipe() {
 };
 
 
-var thisLocation = mongoose.model("new_location_collection", locationSchema);
+var thisLocation = mongoose.model("leaser_database", locationSchema);
 var thisPayment = mongoose.model("new_payment_collection", paymentSchema);
 
 app.post('/jam', function(req, res){
@@ -162,7 +162,7 @@ thisLocation.create(newLocation, function(err, location){
 		res.redirect("/");
 	});
 }
-    }, 1500);
+    }, 3000);
     });
 
 app.get("/", function(req, res){
