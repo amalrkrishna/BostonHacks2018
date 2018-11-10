@@ -23,7 +23,12 @@ var locationSchema = new mongoose.Schema({
 	body: String,
 	amount: Number,
 	latitude: Number,
-	longitude: Number
+    longitude: Number,
+    // added start_time and end_time here
+    start_time: Date,
+    end_time: Date
+
+
 });
 
 var paymentSchema = new mongoose.Schema({
@@ -60,7 +65,11 @@ app.post('/jam', function(req, res){
 		title:req.body.Title,
 		body:req.body.Body,
 		amount:req.body.Amount,
-		address:req.body.Address
+        address:req.body.Address,
+        // OC: add start-time and end_time
+        start_time:req.body.StartTime,
+        end_time:req.body.EndTime
+
     }
     
     res.redirect("address");
@@ -132,7 +141,12 @@ app.get('/new', function(req, res) {
 		body:postUser.body,
 		amount:postUser.amount,
 		latitude:thisLat,
-		longitude:thisLng,
+        longitude:thisLng,
+        //added start_time and end_time
+        start_time:postUser.start_time,
+        end_time:postUser.end_time
+
+
 	} 
 	
 	console.log(newLocation);
@@ -172,6 +186,6 @@ app.get("*", function(req, res){
     //Catches any unknown gibberish and re-directs back to "/"
 });
 
-app.listen(3000, function(){
+app.listen(3003, function(){
     console.log("Server is listening...");
 });
