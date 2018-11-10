@@ -13,11 +13,13 @@ var mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 
 mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database", { useNewUrlParser: true });
+mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds157923.mlab.com:57923/renter_database", { useNewUrlParser: true });
+
 
 app.set('view engine', 'ejs');
 
 
-var locationSchema = new mongoose.Schema({
+var leaserSchema = new mongoose.Schema({
 	name: String,
 	title: String,
 	body: String,
@@ -31,7 +33,7 @@ var locationSchema = new mongoose.Schema({
 
 });
 
-var paymentSchema = new mongoose.Schema({
+var renterSchema = new mongoose.Schema({
     dataValue: String,
     dataDescriptor: String,
     transaction_id: String,
@@ -55,8 +57,8 @@ function wipe() {
 };
 
 
-var thisLocation = mongoose.model("leaser_database", locationSchema);
-var thisPayment = mongoose.model("new_payment_collection", paymentSchema);
+var thisLocation = mongoose.model("leaser_database", leaserSchema);
+var thisPayment = mongoose.model("renter_database", renterSchema);
 
 app.post('/jam', function(req, res){
     console.log("1");
