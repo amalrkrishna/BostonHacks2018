@@ -148,7 +148,7 @@ thisLocation.create(newLocation, function(err, location){
 		res.redirect("/");
 	});
 }
-    }, 1500);
+    }, 3000);
     });
 
 app.get("/", function(req, res){
