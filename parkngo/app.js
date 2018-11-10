@@ -12,7 +12,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 
-mongoose.connect("mongodb://localhost/hakron3000_db");
+mongoose.connect("mongodb://andyduly:123456a@ds159273.mlab.com:59273/parkngo");
 
 app.set('view engine', 'ejs');
 
@@ -172,6 +172,6 @@ app.get("*", function(req, res){
     //Catches any unknown gibberish and re-directs back to "/"
 });
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(3000, function(){
     console.log("Server is listening...");
 });
