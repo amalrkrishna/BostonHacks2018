@@ -142,7 +142,7 @@ thisPayment.create(newPayment, function(err, location){
 			console.log("added to renter_dataset");
 		}
 	});
-    thisLocation.find({_id:req.body._id}).remove(function(){
+    thisPayment.find({_id:req.body._id}).remove(function(){
     });
     res.render("confirmation", {transaction_id:req.body._id});
 });
