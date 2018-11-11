@@ -126,12 +126,15 @@ app.post('/jam_filter', function(req, res){
    // }
     //});
 
+    console.log(postUser);
     thisLeaser.
         find().
         where('amount').gte(postUser.min_amount).
         where('amount').lte(postUser.max_amount).
         where('start_time').lte(postUser.start_time).
         where('end_time').gte(postUser.end_time).
+        where('start_date').lte(new Date(start_date)).
+        where('end_date').gte(new Date(end_date)).
         exec(function(err, theLeaser){
             console.log(JSON.stringify(theLeaser, null, 4))
             if(err){
