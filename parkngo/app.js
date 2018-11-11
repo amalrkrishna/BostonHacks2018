@@ -85,49 +85,64 @@ app.post('/jam', function(req, res){
     res.redirect("address");
 });
 
+function getJedisQuery(min_amount, max_amount, start_time, end_time){
+
+
+    var query = thisLeaser.find({
+        amount: { $gte: min_amount },
+        amount: { $lte: max_amount },
+        start_time: { $gte: start_time },
+        end_time: { $lte: end_time }});
+
+
+    return query;
+ }
+
 app.post('/jam_filter', function(req, res){
     console.log("filter");
     postUser = {
         address:req.body.Address,
         days:req.body.days,
-        min_amount:Number(req.body.MinAmount),
-        max_amount:Number(req.body.MaxAmount),
-        start_time:Number(req.body.StartTime),
-        end_time:Number(req.body.EndTime),
+        min_amount:req.body.MinAmount,
+        max_amount:req.body.MaxAmount,
+        start_time:req.body.StartTime,
+        end_time:req.body.EndTime,
         daterange:req.body.daterange
     }
 
     var start_date = postUser.daterange.split(" - ")[0];
     var end_date = postUser.daterange.split(" - ")[1];
 
-    console.log(JSON.stringify(thisLeaser, null, 4))
-    console.log("------------")
+    //var query =  getJedisQuery(postUser.min_amount, postUser.max_amount, postUser.start_time,
+    //                            postUser.end_time);
+    //    query.exec(function(err, jedis){
+    //        if(err){
+    //            console.log("Database error");
+    //            console.log(err);
+    //             wipe();
+    //        } else {
+    //            res.render("renter", {locations:jedis})
+    //            //Serves up renter.ejs and collects user input
+   // }
+    //});
 
-    thisLeaser.find({
-        amount: { $gte: postUser.min_amount },
-        amount: { $lte: postUser.max_amount},
-                //latitude: { $lte: thisLat+0.01449},
-                //latitude: { $gte: thisLat-0.01449},
-                //longitude: { $lte: thisLng+0.0181},
-                //longitude: { $gte: thisLng-0.0181},
-                //start_time: { $gte: postUser.start_time},
-                //end_time: { $lte: postUser.end_time},
-                //days: {  days : {in : postUser.days}},
-                //start_date: { $gte: new Date(start_date)},
-                //end_date: { $lte: new Date(end_date)}
-        },
-        function(err, theLeaser){
+    thisLeaser.
+        find().
+        where('amount').gte(postUser.min_amount).
+        where('amount').lte(postUser.max_amount).
+        where('start_time').lte(postUser.start_time).
+        where('end_time').gte(postUser.end_time).
+        exec(function(err, theLeaser){
             console.log(JSON.stringify(theLeaser, null, 4))
             if(err){
                         console.log("Database error");
                         console.log(err);
                          wipe();
             } else {
-                        res.render("renter", {locations:theLeaser,
-                                                postUser:postUser})
+                        res.render("renter", {locations:theLeaser})
                         //Serves up renter.ejs and collects user input
             }
-        });
+    });
 });
 
 app.get("/address2", function(req, res){
