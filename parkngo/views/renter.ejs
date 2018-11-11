@@ -43,192 +43,195 @@
 </head>
 
 <body>
+    <div class="row no-gutters">
+        <div class="col-6 col-md-4 bg-info text-light" >
+          <br>
+          <div class="container">
+            <fieldset>
 
-    <fieldset>
+				      <form action="/jam_filter" method="POST">
+                <legend>Rent a parking spot and</legend>
+                <legend><b>save your time.</b></legend>
+						    <p>
+                  <input class="form-control input-sm" type="text" id="location" name="Address" placeholder="Address" autocomplete="off"><br>
 
-				<form action="/jam_filter" method="POST">
-						<legend>Renter - Fill Out Your Request</legend>
-						<p>
-                Address: <input type="text" id="location" name="Address" size="40" value="" autocomplete="off" /><br>
+                  <div class="form-check form-check-inline">
+                  Availability: 
+                  Mon<input type="checkbox" name="mon" value=1>
+                  Tue<input type="checkbox" name="tue" value=1> 
+                  Wed<input type="checkbox" name="wed" value=1> 
+                  Thu<input type="checkbox" name="thu" value=1> 
+                  Fri<input type="checkbox" name="fri" value=1> 
+                  Sat<input type="checkbox" name="sat" value=1>
+                  Sun<input type="checkbox" name="sun" value=1> <br>
+                </div><br><br>
 
-                Availability: 
-                All Days<input type="checkbox" name="all" value=1>
-                Mon<input type="checkbox" name="mon" value=1>
-                Tue<input type="checkbox" name="tue" value=1> 
-                Wed<input type="checkbox" name="wed" value=1> 
-                Thu<input type="checkbox" name="thu" value=1> 
-                Fri<input type="checkbox" name="fri" value=1> 
-                Sat<input type="checkbox" name="sat" value=1>
-                Sun<input type="checkbox" name="sun" value=1> <br>
+                  <input class="form-control input-sm" type="text" name="MinAmount" placeholder="MinAmount"><br>
+                  <input class="form-control input-sm" type="text" name="MaxAmount" placeholder="MaxAmount"><br>
 
-                Price (min): <input type="text" name="MinAmount" /><br>
-                Price (max): <input type="text" name="MaxAmount" /><br>
 
-                <!-- OC: added Start and endtime -->
-                Dates: <input type="text" name="daterange" /><br>
+                  Start Time: 
 
-                Start Time: 
+                  <select class="input-small" name='StartTime'>
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                  </select>
 
-                <select name='StartTime'>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                </select>
+                  End Time: 
 
-                End Time: 
-
-                <select name='EndTime'>
-                    <option value="0">0</option>
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                    <option value="11">11</option>
-                    <option value="12">12</option>
-                    <option value="13">13</option>
-                    <option value="14">14</option>
-                    <option value="15">15</option>
-                    <option value="16">16</option>
-                    <option value="17">17</option>
-                    <option value="18">18</option>
-                    <option value="19">19</option>
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                </select>
+                  <select class="input-small" name='EndTime'>
+                      <option value="0">0</option>
+                      <option value="1">1</option>
+                      <option value="2">2</option>
+                      <option value="3">3</option>
+                      <option value="4">4</option>
+                      <option value="5">5</option>
+                      <option value="6">6</option>
+                      <option value="7">7</option>
+                      <option value="8">8</option>
+                      <option value="9">9</option>
+                      <option value="10">10</option>
+                      <option value="11">11</option>
+                      <option value="12">12</option>
+                      <option value="13">13</option>
+                      <option value="14">14</option>
+                      <option value="15">15</option>
+                      <option value="16">16</option>
+                      <option value="17">17</option>
+                      <option value="18">18</option>
+                      <option value="19">19</option>
+                      <option value="20">20</option>
+                      <option value="21">21</option>
+                      <option value="22">22</option>
+                      <option value="23">23</option>
+                  </select>
 
                 <br>
             </p>
-						<button>Submit</button>
+						<button class="btn btn-primary btn-dark btn-block">Submit</button>
 						<br>
-
-
-				</form>
-
-		</fieldset>
-  <div id="map" style="width: 100%; height: 750px; background: grey" />
-  <script  type="text/javascript" charset="UTF-8" >
+            </form>
+            </div>
+          </fieldset>
+  </div>
     
 
-
-    
-/**
- * Creates a new marker and adds it to a group
- * @param {H.map.Group} group       The group holding the new marker
- * @param {H.geo.Point} coordinate  The location of the marker
- * @param {String} html             Data associated with the marker
- */
-function addMarkerToGroup(group, coordinate, html) {
-  var marker = new H.map.Marker(coordinate);
-  // add custom data to the marker
-  marker.setData(html);
-  group.addObject(marker);
-}
-
-/**
- * Add two markers showing the position of Liverpool and Manchester City football clubs.
- * Clicking on a marker opens an infobubble which holds HTML content related to the marker.
- * @param  {H.Map} map      A HERE Map instance within the application
- */
-function addInfoBubble(map) {
-  var group = new H.map.Group();
-
-  map.addObject(group);
-
-  // add 'tap' event listener, that opens info bubble, to the group
-  group.addEventListener('tap', function (evt) {
-    // event target is the marker itself, group is a parent event target
-    // for all objects that it contains
-    var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
-      // read custom data
-      content: evt.target.getData()
-    });
-    // show info bubble
-    ui.addBubble(bubble);
-  }, false);
-    
-    
-        var rows = <%-JSON.stringify(locations)%>
-        console.log(rows);
-        console.log("lorem ipsum");
-
-        for(i=0; i< rows.length; i++) {
-            console.log(rows[i]._id);
-            var loopLat = rows[i].latitude;
-            var loopLng = rows[i].longitude;
-            addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
-            '</div class="bg-transparent"><h6>' + rows[i].name + 
-              '<br> $' + rows[i].amount + 
-              '<br>' + rows[i].start_time + 
-              '<br>' + rows[i].end_time  + 
-              '<br>' + rows[i].daterange + '</div><br></h6>' +
-              '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = ""/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a>' );
-        }
-}
+      <div class="col-12 col-sm-6 col-md-8">
+        <div id="map" style="width: 100%; height: 750px; background: grey" />
+        <script  type="text/javascript" charset="UTF-8" >
+      
 
 
+      
+  /**
+  * Creates a new marker and adds it to a group
+  * @param {H.map.Group} group       The group holding the new marker
+  * @param {H.geo.Point} coordinate  The location of the marker
+  * @param {String} html             Data associated with the marker
+  */
+  function addMarkerToGroup(group, coordinate, html) {
+    var marker = new H.map.Marker(coordinate);
+    // add custom data to the marker
+    marker.setData(html);
+    group.addObject(marker);
+  }
 
-/**
- * Boilerplate map initialization code starts below:
- */
+  /**
+  * Add two markers showing the position of Liverpool and Manchester City football clubs.
+  * Clicking on a marker opens an infobubble which holds HTML content related to the marker.
+  * @param  {H.Map} map      A HERE Map instance within the application
+  */
+  function addInfoBubble(map) {
+    var group = new H.map.Group();
 
-// initialize communication with the platform
-var platform = new H.service.Platform({
-  app_id: 'devportal-demo-20180625',
-  app_code: '9v2BkviRwi9Ot26kp2IysQ',
-  useHTTPS: true
-});
-var pixelRatio = window.devicePixelRatio || 1;
-var defaultLayers = platform.createDefaultLayers({
-  tileSize: pixelRatio === 1 ? 256 : 512,
-  ppi: pixelRatio === 1 ? undefined : 320
-});
+    map.addObject(group);
 
-// initialize a map - this map is centered over UAkron
+    // add 'tap' event listener, that opens info bubble, to the group
+    group.addEventListener('tap', function (evt) {
+      // event target is the marker itself, group is a parent event target
+      // for all objects that it contains
+      var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
+        // read custom data
+        content: evt.target.getData()
+      });
+      // show info bubble
+      ui.addBubble(bubble);
+    }, false);
+      
+      
+          var rows = <%-JSON.stringify(locations)%>
+          console.log(rows);
+          console.log("lorem ipsum");
 
-var map = new H.Map(document.getElementById('map'),
-platform.createDefaultLayers().normal.map, {
-    center: {lat: 42.3505, lng: -71.1054}, 
-    zoom: 14
-});
+          for(i=0; i< rows.length; i++) {
+              console.log(rows[i]._id);
+              var loopLat = rows[i].latitude;
+              var loopLng = rows[i].longitude;
+              addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
+      '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button>Buy</button></form></a>' +
+      '<div><p>' + rows[i].title + '</p>' + 
+      '</div>' + rows[i].name + '<br> $' + rows[i].amount + '<br><br>' + rows[i].body + '</div>');
+          }
+  }
 
-// MapEvents enables the event system
-// Behavior implements default interactions for pan/zoom (also on mobile touch environments)
-var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-// create default UI with layers provided by the platform
-var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-// Now use the map as required...
-addInfoBubble(map);
-  </script>
+  /**
+  * Boilerplate map initialization code starts below:
+  */
+
+  // initialize communication with the platform
+  var platform = new H.service.Platform({
+    app_id: 'devportal-demo-20180625',
+    app_code: '9v2BkviRwi9Ot26kp2IysQ',
+    useHTTPS: true
+  });
+  var pixelRatio = window.devicePixelRatio || 1;
+  var defaultLayers = platform.createDefaultLayers({
+    tileSize: pixelRatio === 1 ? 256 : 512,
+    ppi: pixelRatio === 1 ? undefined : 320
+  });
+
+  // initialize a map - this map is centered over UAkron
+
+  var map = new H.Map(document.getElementById('map'),
+  platform.createDefaultLayers().normal.map, {
+      center: {lat: 42.3505, lng: -71.1054}, 
+      zoom: 14
+  });
+
+  // MapEvents enables the event system
+  // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+  var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+
+  // create default UI with layers provided by the platform
+  var ui = H.ui.UI.createDefault(map, defaultLayers);
+
+  // Now use the map as required...
+  addInfoBubble(map);
+        </script>
+      </div>
 </body>
 </html>

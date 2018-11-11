@@ -21,6 +21,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <link rel="stylesheet" type="text/css" href="style.css"/>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/css/bootstrap-multiselect.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-multiselect/0.9.13/js/bootstrap-multiselect.js"></script>
+
 
 <script>
     function initialize() {
@@ -43,6 +46,11 @@
       theme: 'blue-grey',
     });
 
+    $(document).ready(function() {
+      $('#days').multiselect();
+    });
+   
+
 </script>
 
 </head>
@@ -63,26 +71,24 @@
                         <input class="form-control input-sm" type="text" name="Name" placeholder="Your Name"><br>
                         <input class="form-control input-sm" type="text" id="location" name="Address" value="" autocomplete="off" /><br>
         
-                        <div class="form-check form-check-inline">
-                        Availability:
-                        Mon <input class="form-check-input" type="checkbox" name="mon" value=1>
-                        Tue <input class="form-check-input" type="checkbox" name="tue" value=1> 
-                        Wed <input class="form-check-input" type="checkbox" name="wed" value=1> 
-                        Thu <input class="form-check-input" type="checkbox" name="thu" value=1> 
-                        Fri <input class="form-check-input" type="checkbox" name="fri" value=1> 
-                        Sat <input class="form-check-input" type="checkbox" name="sat" value=1>
-                        Sun <input class="form-check-input" type="checkbox" name="sun" value=1> 
-                        
-                        </div><br><br>
+                        <select class="form-control input-sm"  multiple="multiple" id="days">
+                        <option value="" disabled selected>Choose your availability</option>
+                        <option value="1">Monday</option>
+                        <option value="2">Tueday</option>
+                        <option value="3">Wednesday</option>
+                        <option value="4">Thursday</option>
+                        <option value="5">Friday</option>
+                        <option value="6">Saturday</option>
+                        <option value="7">Sunday</option>
+                        </select><br>
         
                         <input class="form-control input-sm" type="text" name="Amount" placeholder="Price (per hour)"> <br>
         
                         <!-- OC: added Start and endtime -->
                         <input class="form-control input-sm" type="text" name="daterange" placeholder="Date range (11/01/2018 - 11/07/2018)"/><br>
         
-                        Start Time: 
-        
-                        <select class="input-small" name='StartTime'>
+                        <select class="form-control input-small" name='StartTime'>
+                            <option value="" disabled selected>Start time</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -107,11 +113,10 @@
                             <option value="21">21</option>
                             <option value="22">22</option>
                             <option value="23">23</option>
-                        </select>
+                        </select><br>
         
-                        End Time: 
-        
-                        <select class="input-small" name='EndTime'>
+                        <select class="form-control" name='EndTime'>
+                            <option value="" disabled selected>End time</option>
                             <option value="0">0</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
