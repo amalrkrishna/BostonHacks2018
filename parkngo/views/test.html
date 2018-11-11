@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>PARKnGO</title>
+    <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+    <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFQYZU1zsSoG1rHgPaseU5vahmTiK_TLI&libraries=places"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="style5.css">
+
+    <!-- Font Awesome JS -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
+    <script>
+    function initialize() {
+      var input = document.getElementById('location');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+        opens: 'left'
+      }, function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+    });
+   </script>
+</head>
+
+<body>
+
+    <div class="wrapper">
+        <!-- Sidebar Holder -->
+        <nav id="sidebar">
+            <div class="sidebar-header">
+                <button type="button" id="sidebarCollapse" class="navbar-btn"></button>
+                <h3>PARKnGO</h3>
+            </div>
+            <ul class="list-unstyled components">
+            <p align="center">LEND or RENT</p>
+            <fieldset>
+            <form action="/jam" method="POST">
+			<legend>Lender - Fill Out Your Request</legend>
+			<p>
+
+                Name: <input type="text" name="Name" size="20"><br>
+                Address: <input type="text" id="location" name="Address" size="40" value="" autocomplete="off" /><br>
+
+
+                Availability: 
+                All Days<input type="checkbox" name="all" value=1>
+                Mon<input type="checkbox" name="mon" value=1>
+                Tue<input type="checkbox" name="tue" value=1> 
+                Wed<input type="checkbox" name="wed" value=1> 
+                Thu<input type="checkbox" name="thu" value=1> 
+                Fri<input type="checkbox" name="fri" value=1> 
+                Sat<input type="checkbox" name="sat" value=1>
+                Sun<input type="checkbox" name="sun" value=1> <br>
+
+                Price (per hour): $<input type="text" name="Amount" size="5"> <br>
+
+                <!-- OC: added Start and endtime -->
+                Dates: <input type="text" name="daterange" /><br>
+
+                Start Time: <input type="text" id="time" name="time" size="5"><br>
+
+                <br>
+            </p>
+            <p align="center"><button >Submit</button></p>
+				<br>
+
+				</form>
+            </fieldset>
+                <li class="active">
+                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+                    <ul class="collapse list-unstyled" id="homeSubmenu">
+                        <li>
+                            <a href="#">Home 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Home 3</a>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">About</a>
+                    <a href="#pageSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Pages</a>
+                    <ul class="collapse list-unstyled" id="pageSubmenu">
+                        <li>
+                            <a href="#">Page 1</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 2</a>
+                        </li>
+                        <li>
+                            <a href="#">Page 3</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Page Content Holder -->
+        <div id="content">
+            
+                <script  type="text/javascript" charset="UTF-8" >
+    
+                    /**
+                     * Creates a new marker and adds it to a group
+                     * @param {H.map.Group} group       The group holding the new marker
+                     * @param {H.geo.Point} coordinate  The location of the marker
+                     * @param {String} html             Data associated with the marker
+                     */
+                    function addMarkerToGroup(group, coordinate, html) {
+                      var marker = new H.map.Marker(coordinate);
+                      // add custom data to the marker
+                      marker.setData(html);
+                      group.addObject(marker);
+                    }
+                    
+                    /**
+                     * Add two markers showing the position of Liverpool and Manchester City football clubs.
+                     * Clicking on a marker opens an infobubble which holds HTML content related to the marker.
+                     * @param  {H.Map} map      A HERE Map instance within the application
+                     */
+                    function addInfoBubble(map) {
+                      var group = new H.map.Group();
+                    
+                      map.addObject(group);
+                    
+                      // add 'tap' event listener, that opens info bubble, to the group
+                      group.addEventListener('tap', function (evt) {
+                        // event target is the marker itself, group is a parent event target
+                        // for all objects that it contains
+                        var bubble =  new H.ui.InfoBubble(evt.target.getPosition(), {
+                          // read custom data
+                          content: evt.target.getData()
+                        });
+                        // show info bubble
+                        ui.addBubble(bubble);
+                      }, false);
+                        
+                        
+                            var rows = <%-JSON.stringify(locations)%>
+                            console.log(rows);
+                            console.log("lorem ipsum");
+                    
+                            for(i=0; i< rows.length; i++) {
+                                console.log(rows[i]._id);
+                                var loopLat = rows[i].latitude;
+                                var loopLng = rows[i].longitude;
+                                addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
+                        '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button>Buy</button></form></a>' +
+                        '<div><p>' + rows[i].title + '</p>' + 
+                        '</div>' + rows[i].name + '<br> $' + rows[i].amount + '<br><br>' + rows[i].body + '</div>');
+                            }
+                    }
+                    
+                    
+                    
+                    /**
+                     * Boilerplate map initialization code starts below:
+                     **/
+                    
+                    // initialize communication with the platform
+                    var platform = new H.service.Platform({
+                      app_id: 'devportal-demo-20180625',
+                      app_code: '9v2BkviRwi9Ot26kp2IysQ',
+                      useHTTPS: true
+                    });
+                    var pixelRatio = window.devicePixelRatio || 1;
+                    var defaultLayers = platform.createDefaultLayers({
+                      tileSize: pixelRatio === 1 ? 256 : 512,
+                      ppi: pixelRatio === 1 ? undefined : 320
+                    });
+                    
+                    // initialize a map - this map is centered over UAkron
+                    
+                    var map = new H.Map(document.getElementById('map'),
+                    platform.createDefaultLayers().normal.map, {
+                        center: {lat: 42.3505, lng: -71.1054}, 
+                        zoom: 14
+                    });
+                    
+                    // MapEvents enables the event system
+                    // Behavior implements default interactions for pan/zoom (also on mobile touch environments)
+                    var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
+                    
+                    // create default UI with layers provided by the platform
+                    var ui = H.ui.UI.createDefault(map, defaultLayers);
+                    
+                    // Now use the map as required...
+                    addInfoBubble(map);
+                    
+                    
+                      </script>
+
+        </div>
+    </div>
+
+    <!-- jQuery CDN - Slim version (=without AJAX) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <!-- Popper.JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sidebarCollapse').on('click', function () {
+                $('#sidebar').toggleClass('active');
+                $(this).toggleClass('active');
+            });
+        });
+    </script>
+</body>
+
+</html>

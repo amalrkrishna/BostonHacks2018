@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<title>PARKnGO</title>
 <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
@@ -14,8 +15,15 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-<script src="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.js"></script>
-<link href="http://cdn.jsdelivr.net/timepicker.js/latest/timepicker.min.css" rel="stylesheet"/>
+
+<!-- Bootstrap CSS CDN -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+<!-- Our Custom CSS -->
+<link rel="stylesheet" href="style5.css">
+
+<!-- Font Awesome JS -->
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+<script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
 
 <script>
     function initialize() {
@@ -31,66 +39,56 @@
         console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
       });
     });
-
-    var timepicker = new TimePicker('time', {
-      lang: 'en',
-      theme: 'dark'
-    });
-    timepicker.on('change', function(evt) {
-      
-      var value = (evt.hour || '00') + ':' + (evt.minute || '00');
-      evt.element.value = value;
-
-    });
    </script>
 
 </head>
 
 <body>
+  <div class="wrapper">
+    <!-- Sidebar Holder -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+        <h3>PARKnGO</h3>
+    </div>
+    <div class="sidebar-form">
+      <fieldset>
+      <form action="/jam" method="POST">
+      <legend>Lender - Fill Out Your Request</legend>
 
-    <fieldset>
-
-				<form action="/jam" method="POST">
-						<legend>Lender - Fill Out Your Request</legend>
-						<p>
-
-                Name: <input type="text" name="Name" size="20"><br>
-                Address: <input type="text" id="location" name="Address" size="40" value="" autocomplete="off" /><br>
-
-
-                Availability: 
-                All Days<input type="checkbox" name="all" value=1>
-                Mon<input type="checkbox" name="mon" value=1>
-                Tue<input type="checkbox" name="tue" value=1> 
-                Wed<input type="checkbox" name="wed" value=1> 
-                Thu<input type="checkbox" name="thu" value=1> 
-                Fri<input type="checkbox" name="fri" value=1> 
-                Sat<input type="checkbox" name="sat" value=1>
-                Sun<input type="checkbox" name="sun" value=1> <br>
-
-                Price (per hour): $<input type="text" name="Amount" size="5"> <br>
-
-                <!-- OC: added Start and endtime -->
-                Dates: <input type="text" name="daterange" /><br>
-
-                Start Time: <input type="text" id="time" name="time" size="5"><br>
-
-                <br>
-						</p>
+          Name: <input type="text" name="Name" size="20"><br>
+          Address: <input type="text" id="location" name="Address" size="40" value="" autocomplete="off" /><br>
 
 
-						<button>Submit</button>
+          Availability: 
+          All Days<input type="checkbox" name="all" value=1>
+          Mon<input type="checkbox" name="mon" value=1>
+          Tue<input type="checkbox" name="tue" value=1> 
+          Wed<input type="checkbox" name="wed" value=1> 
+          Thu<input type="checkbox" name="thu" value=1> 
+          Fri<input type="checkbox" name="fri" value=1> 
+          Sat<input type="checkbox" name="sat" value=1>
+          Sun<input type="checkbox" name="sun" value=1> <br>
 
+          Price (per hour): $<input type="text" name="Amount" size="5"> <br>
 
-						<br>
+          <!-- OC: added Start and endtime -->
+          Dates: <input type="text" name="daterange" /><br>
 
+          Start Time: <input type="text" id="time" name="time" size="5"><br>
 
+          <br>
+      </p>
+      <p align="center"><button >Submit</button></p>
+  <br>
 
+  </form>
+      </fieldset>
+    </div>
+  </nav>
+  <!-- Page Content Holder -->
+  <div id="content">
+  <div id="map" style="width: 100%; height: 100%; background: grey" />
 
-				</form>
-
-		</fieldset>
-  <div id="map" style="width: 100%; height: 750px; background: grey" />
   <script  type="text/javascript" charset="UTF-8" >
     
 /**
@@ -148,7 +146,7 @@ function addInfoBubble(map) {
 
 /**
  * Boilerplate map initialization code starts below:
- */
+ **/
 
 // initialize communication with the platform
 var platform = new H.service.Platform({
@@ -179,6 +177,24 @@ var ui = H.ui.UI.createDefault(map, defaultLayers);
 
 // Now use the map as required...
 addInfoBubble(map);
-  </script>
+  </script> 
+  </div>
+  </div>
+
+      <!-- jQuery CDN - Slim version (=without AJAX) -->
+      <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+      <!-- Popper.JS -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+      <!-- Bootstrap JS -->
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+  
+      <script type="text/javascript">
+          $(document).ready(function () {
+              $('#sidebarCollapse').on('click', function () {
+                  $('#sidebar').toggleClass('active');
+                  $(this).toggleClass('active');
+              });
+          });
+      </script>
 </body>
 </html>
