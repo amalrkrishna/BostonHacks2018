@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
+  <title>
+    Renter Page
+  </title>
 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
@@ -56,13 +60,14 @@
 <body>
     <div class="row no-gutters">
         <div class="col-6 col-md-4 bg-info text-light" >
-          <br>
           <div class="container">
             <fieldset>
 
               <form action="/jam_filter" method="POST">
                 <img src="ParknGo_Logo.png" class="img-fluid" alt="Responsive image">
-                <input type="button" class="btn btn-info" value="Lender" onclick="window.open('lender','_self');">
+
+                <button type="button" class="btn btn-dark" name="Lender" id="Lender" onclick="window.open('lender','_self');"> Lend my parking spot</button>
+                <button type="button" class="btn btn-dark active" value="Lender" > Rent a parking spot</button>
                 <legend><b>Rent a parking spot and</b></legend>
                 <legend><b>save your time.</b></legend>
 						    <p>
@@ -191,22 +196,31 @@
       
       
           var rows = <%-JSON.stringify(locations)%>
+          if(postUser != undefined){
+            var rows2 = <%-JSON.stringify(postUser)%>
+            console.log(rows2);
+          }
+          
           console.log(rows);
           console.log("lorem ipsum");
 
           for(i=0; i< rows.length; i++) {
+
               console.log(rows[i]._id);
               var loopLat = rows[i].latitude;
               var loopLng = rows[i].longitude;
               addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
               '<div class="container"></div class="bg-transparent"><h6 small> Name - ' + rows[i].name + 
                       '<br> Price - $' + rows[i].amount + 
+                      '<br> Days -' + rows[i].days + 
                       '<br> Start time -' + rows[i].start_time + 
                       '<br> End time - ' + rows[i].end_time  + 
                       '<br> End date - ' + rows[i].end_date  + 
                       '<br> Start date - ' + rows[i].start_date + '</div><br></h6>' +
-                      '<div ><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = ""/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a></div>' );
+                      '<div ><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a></div>' );
           }
+
+
   }
 
 

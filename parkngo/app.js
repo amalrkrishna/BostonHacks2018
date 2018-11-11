@@ -13,7 +13,7 @@ var mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 
 mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database", { useNewUrlParser: true });
-mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds157923.mlab.com:57923/renter_database", { useNewUrlParser: true });
+//mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds157923.mlab.com:57923/renter_database", { useNewUrlParser: true });
 
 app.set('view engine', 'ejs');
 
@@ -67,7 +67,7 @@ function wipe() {
 
 
 var thisLeaser = mongoose.model("leaser_database", leaserSchema);
-var thisRenter = mongoose.model("renter_database", renterSchema);
+//var thisRenter = mongoose.model("renter_database", renterSchema);
 var thisPayment = mongoose.model("new_payment_collection", paymentSchema);
 
 app.post('/jam', function(req, res){
@@ -89,54 +89,45 @@ app.post('/jam_filter', function(req, res){
     console.log("filter");
     postUser = {
         address:req.body.Address,
-        // OC: add start-time and end_time
         days:req.body.days,
-        min_amount:req.body.MinAmount,
-        max_amount:req.body.MaxAmount,
-        start_time:req.body.StartTime,
-        end_time:req.body.EndTime,
+        min_amount:Number(req.body.MinAmount),
+        max_amount:Number(req.body.MaxAmount),
+        start_time:Number(req.body.StartTime),
+        end_time:Number(req.body.EndTime),
         daterange:req.body.daterange
     }
-    console.log(postUser);
-    //res.redirect("renter");
 
-    var query = postUser.address;
-    
-    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query
-     + "&key=AIzaSyAsGx132XMucPF5R85zEnF_aqnqBZfThLw";
-     
-    request(url, function(error, response, body){
-        if(!error && response.statusCode === 200){
-            requestAPI = JSON.parse(body);
-            thisLat = requestAPI.results[0].geometry.location.lat;
-            thisLng = requestAPI.results[0].geometry.location.lng;
-            console.log(thisLat, thisLng)
+    var start_date = postUser.daterange.split(" - ")[0];
+    var end_date = postUser.daterange.split(" - ")[1];
 
-            var start_date = postUser.daterange.split(" - ")[0]
-            var end_date = postUser.daterange.split(" - ")[1]
+    console.log(JSON.stringify(thisLeaser, null, 4))
+    console.log("------------")
 
-            thisLeaser.find({amount: { $gte: postUser.min_amount },
-                amount: { $lte: postUser.max_amount},
-                latitude: { $lte: thisLat+0.01449},
-                latitude: { $gte: thisLat-0.01449},
-                longitude: { $lte: thisLng+0.0181},
-                longitude: { $gte: thisLng-0.0181},
-                start_time: { $gte: postUser.start_time},
-                end_time: { $lte: postUser.end_time},
-                start_date: { $gte: new Date(start_date)},
-                end_date: { $lte: new Date(start_date)}},
-                function(err, theLeaser){
+    thisLeaser.find({
+        amount: { $gte: postUser.min_amount },
+        amount: { $lte: postUser.max_amount},
+                //latitude: { $lte: thisLat+0.01449},
+                //latitude: { $gte: thisLat-0.01449},
+                //longitude: { $lte: thisLng+0.0181},
+                //longitude: { $gte: thisLng-0.0181},
+                //start_time: { $gte: postUser.start_time},
+                //end_time: { $lte: postUser.end_time},
+                //days: {  days : {in : postUser.days}},
+                //start_date: { $gte: new Date(start_date)},
+                //end_date: { $lte: new Date(end_date)}
+        },
+        function(err, theLeaser){
+            console.log(JSON.stringify(theLeaser, null, 4))
             if(err){
-                console.log("Database error");
-                console.log(err);
-                wipe();
+                        console.log("Database error");
+                        console.log(err);
+                         wipe();
             } else {
-                res.render("renter", {locations:theLeaser})
-                //Serves up renter.ejs and collects user input
+                        res.render("renter", {locations:theLeaser,
+                                                postUser:postUser})
+                        //Serves up renter.ejs and collects user input
             }
-            });
-        }
-    })
+        });
 });
 
 app.get("/address2", function(req, res){
@@ -185,23 +176,22 @@ app.get("/auth", function(req, res){
 });
 
 app.post("/auth", function(req,  res){
-    console.log(req.body);
+    console.log("inside /auth")
     var newPayment= {
 		dataValue:req.body.dataValue,
 		dataDescriptor:req.body.dataDescriptor,
 		transaction_id:req.body._id
 	} 
-	
     console.log(newPayment);
     
 thisPayment.create(newPayment, function(err, location){
-		if(err){
+	if(err){
 			console.log(err);
 		} else {
-			console.log("added to renter_dataset");
+			console.log("added to payment_dataset");
 		}
-	});
-    thisPayment.find({_id:req.body._id}).remove(function(){
+    });
+    thisLeaser.find({_id:req.body._id}).remove(function(){
     });
     res.render("confirmation", {transaction_id:req.body._id});
 });
@@ -257,27 +247,27 @@ app.get('/new', function(req, res) {
 
 app.get("/", function(req, res){
     console.log("4");
-        thisLeaser.find({}, function(err, theLeaser){
+        thisLeaser.find({}, function(err, thisLeaser){
         if(err){
             console.log("Database error");
             console.log(err);
             wipe();
         } else {
-            res.render("lender", {locations:theLeaser})
+            res.render("lender", {locations:thisLeaser})
             //Serves up lender.ejs and collects user input
         }
         });
 });
 
 app.get("/renter", function(req, res){
-    console.log("5");
-        thisLeaser.find({}, function(err, theLeaser){
+    console.log("Inside /render");
+        thisLeaser.find({}, function(err, thisLeaser){
         if(err){
             console.log("Database error");
             console.log(err);
             wipe();
         } else {
-            res.render("renter", {locations:theLeaser})
+            res.render("renter", {locations:thisLeaser})
             //Serves up renter.ejs and collects user input
         }
         });

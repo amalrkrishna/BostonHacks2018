@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <title>
+        Lender Page
+      </title>
 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
 <link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
@@ -47,37 +50,42 @@
     });
 
     $(document).ready(function() {
-      $('#days').multiselect();
+        $('#days').multiselect();
     });
-   
+
+    function validate()
+    {
+      var name = document.getElementsByName('Name');
+      console.log('name')
+      //your logic to validate data
+      if(name === ''){
+        alert("please enter valid name")
+        return true;
+    }
+        
+      else{
+        return false;
+      }
+      
+    }
 
 </script>
 
 </head>
 
 <body>
-
     <div class="row no-gutters">
         <div class="col-6 col-md-4 bg-info text-light" >
           <div class="container">
             <fieldset>
-                <form action="/jam" method="POST">
+                <form onsubmit="validate()" action="/jam" method="POST">
                     <img src="ParknGo_Logo.png" class="img-fluid" alt="Responsive image">
-
-                    <input type="button" class="btn btn-outline-info" value="Renter" onclick="window.open('renter','_self');">
-                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-info active">
-                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Lender
-                        </label>
-                        <label class="btn btn-info">
-                          <input type="radio" value="Renter" onclick="window.open('renter','_self');"> Renter
-                        </label>
-                    </div>
+                    <button type="button" class="btn btn-dark active" name="Lender" id="option1" autocomplete="off" checked> Lend my parking spot</button>
+                    <button type="button" class="btn btn-dark" value="Renter" onclick="window.open('renter','_self');"> Rent a parking spot</button>
 
                     <legend><b>Share your parking spot and </b></legend>
                     <legend><b>save your city.</b></legend>
                     <p>
-        
                         <input class="form-control input-sm" type="text" name="Name" placeholder="Name"><br>
                         <input class="form-control input-sm" type="text" id="location" name="Address" value="" autocomplete="off" /><br>
         
@@ -214,11 +222,12 @@
                       addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
                       '<div class="container"></div class="bg-transparent"><h6 small> Name - ' + rows[i].name + 
                       '<br> Price - $' + rows[i].amount + 
+                      '<br> Days -' + rows[i].days + 
                       '<br> Start time -' + rows[i].start_time + 
                       '<br> End time - ' + rows[i].end_time  + 
                       '<br> End date - ' + rows[i].end_date  + 
                       '<br> Start date - ' + rows[i].start_date + '</div><br></h6>' +
-                      '<div ><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = ""/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a></div>' );
+                      '<div ><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a></div>' );
                   }
           }
           
