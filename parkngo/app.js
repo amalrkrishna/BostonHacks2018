@@ -112,6 +112,7 @@ app.post('/jam_filter', function(req, res){
 
     var start_date = postUser.daterange.split(" - ")[0];
     var end_date = postUser.daterange.split(" - ")[1];
+    
 
     thisLeaser.
         find().
