@@ -59,12 +59,20 @@
 
     <div class="row no-gutters">
         <div class="col-6 col-md-4 bg-info text-light" >
-          <br>
           <div class="container">
             <fieldset>
                 <form action="/jam" method="POST">
                     <img src="ParknGo_Logo.png" class="img-fluid" alt="Responsive image">
-                    <input type="button" class="btn btn-info" value="Renter" onclick="window.open('renter','_self');">
+                    <input type="button" class="btn btn-outline-info" value="Renter" onclick="window.open('renter','_self');">
+                    <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                        <label class="btn btn-info active">
+                          <input type="radio" name="options" id="option1" autocomplete="off" checked> Lender
+                        </label>
+                        <label class="btn btn-info">
+                          <input type="radio" value="Renter" onclick="window.open('renter','_self');"> Renter
+                        </label>
+                    </div>
+
                     <legend><b>Share your parking spot and </b></legend>
                     <legend><b>save your city.</b></legend>
                     <p>
