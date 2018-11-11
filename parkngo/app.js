@@ -82,7 +82,6 @@ app.post('/jam', function(req, res){
         name:req.body.Name,
         address:req.body.Address,
         // OC: add start-time and end_time
-        all:req.body.all,
         mon:req.body.mon,
         tue:req.body.tue,
         wed:req.body.wed,
@@ -103,7 +102,6 @@ app.post('/jam_filter', function(req, res){
     postUser = {
         address:req.body.Address,
         // OC: add start-time and end_time
-        all:req.body.all,
         mon:req.body.mon,
         tue:req.body.tue,
         wed:req.body.wed,
@@ -131,12 +129,22 @@ app.post('/jam_filter', function(req, res){
             thisLat = requestAPI.results[0].geometry.location.lat;
             thisLng = requestAPI.results[0].geometry.location.lng;
             console.log(thisLat, thisLng)
+
+            var start_date = postUser.daterange.split(" - ")[0]
+            var end_date = postUser.daterange.split(" - ")[1]
+
             thisLeaser.find({amount: { $gte: postUser.min_amount },
                 amount: { $lte: postUser.max_amount},
                 latitude: { $lte: thisLat+0.01449},
                 latitude: { $gte: thisLat-0.01449},
                 longitude: { $lte: thisLng+0.0181},
-                longitude: { $gte: thisLng-0.0181}},
+                longitude: { $gte: thisLng-0.0181},
+                start_time: { $gte: postUser.start_time},
+                end_time: { $lte: postUser.end_time},
+                start_date: { $gte: new Date(start_date)},
+                end_date: { $lte: new Date(start_date)}},
+
+
                 function(err, theLeaser){
             if(err){
                 console.log("Database error");
@@ -242,7 +250,6 @@ app.get('/new', function(req, res) {
 		amount:postUser.amount,
 		latitude:thisLat,
         longitude:thisLng,
-        all:postUser.all,
         mon:postUser.mon,
         tue:postUser.tue,
         wed:postUser.wed,
@@ -256,7 +263,7 @@ app.get('/new', function(req, res) {
         end_date:end_date
 	} 
 	
-    //console.log(newLeaser);
+    console.log(newLeaser);
     
     thisLeaser.create(newLeaser, function(err, location){
 		if(err){

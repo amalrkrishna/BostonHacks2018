@@ -185,9 +185,12 @@ function addInfoBubble(map) {
             var loopLat = rows[i].latitude;
             var loopLng = rows[i].longitude;
             addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
-    '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button>Buy</button></form></a>' +
-    '<div><p>' + rows[i].title + '</p>' + 
-    '</div>' + rows[i].name + '<br> $' + rows[i].amount + '<br><br>' + rows[i].body + '</div>');
+            '</div class="bg-transparent"><h6>' + rows[i].name + 
+              '<br> $' + rows[i].amount + 
+              '<br>' + rows[i].start_time + 
+              '<br>' + rows[i].end_time  + 
+              '<br>' + rows[i].daterange + '</div><br></h6>' +
+              '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = ""/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a>' );
         }
 }
 
