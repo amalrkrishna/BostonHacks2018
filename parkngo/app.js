@@ -131,8 +131,6 @@ app.post('/jam_filter', function(req, res){
                         res.render("renter", {locations:theLeaser})
             }
     });
-
-    */
 });
  
 app.get("/address2", function(req, res){
