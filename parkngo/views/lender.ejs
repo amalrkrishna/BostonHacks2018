@@ -7,30 +7,64 @@
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
 <script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDFQYZU1zsSoG1rHgPaseU5vahmTiK_TLI&libraries=places"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+<script>
+    function initialize() {
+      var input = document.getElementById('location');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      }
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $(function() {
+      $('input[name="daterange"]').daterangepicker({
+        opens: 'left'
+      }, function(start, end, label) {
+        console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+      });
+    });
+   </script>
 
 </head>
+
 <body>
 
     <fieldset>
 
 				<form action="/jam" method="POST">
-
-						<legend>Fill Out Your Request</legend>
+						<legend>Lender - Fill Out Your Request</legend>
 						<p>
 
-    						Name: <input type="text" name="Name" size="10">
-
-    						Title: <input type="text" name="Title" size="20">
-
-    						Description: <input type="text" name="Body" size="20">
-
-    						Offer: $<input type="text" name="Amount" size="5">
-
-    						<br>
-
-    						Address: <input type="text" name="Address" size="40">
+                Name: <input type="text" name="Name" size="20"><br>
+                Address: <input type="text" id="location" name="Address" size="40" value="" autocomplete="off" /><br>
 
 
+                Availability: 
+                All Days<input type="checkbox" name="all" value=1>
+                Mon<input type="checkbox" name="mon" value=1>
+                Tue<input type="checkbox" name="tue" value=1> 
+                Wed<input type="checkbox" name="wed" value=1> 
+                Thu<input type="checkbox" name="thu" value=1> 
+                Fri<input type="checkbox" name="fri" value=1> 
+                Sat<input type="checkbox" name="sat" value=1>
+                Sun<input type="checkbox" name="sun" value=1> <br>
+
+                Price (per hour): $<input type="text" name="Amount" size="5"> <br>
+
+                <!-- OC: added Start and endtime -->
+                Dates: <input type="text" name="daterange" /><br>
+
+                Start Time: <input type="number" name="StartTime" size="5"> <br>
+
+                End Time: <input type="number" name="EndTime" size="5"> <br>
+
+                <br>
 						</p>
 
 
@@ -98,6 +132,7 @@ function addInfoBubble(map) {
     '</div>' + rows[i].name + '<br> $' + rows[i].amount + '<br><br>' + rows[i].body + '</div>');
         }
 }
+
 
 
 /**
