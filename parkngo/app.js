@@ -128,7 +128,7 @@ thisRenter.create(newRenter, function(err, location){
 		if(err){
 			console.log(err);
 		} else {
-			console.log("added to new_payment_collection");
+			console.log("added to renter_dataset");
 		}
 	});
     thisLocation.find({_id:req.body._id}).remove(function(){
@@ -148,22 +148,23 @@ app.get('/new', function(req, res) {
         res.redirect("/");
         wipe();
     } else {
+    
 	var newLeaser = {
 		name:postUser.name,
 		amount:postUser.amount,
 		latitude:thisLat,
         longitude:thisLng,
-        all:req.body.all,
-        mon:req.body.mon,
-        tue:req.body.tue,
-        wed:req.body.wed,
-        thu:req.body.thu,
-        fri:req.body.fri,
-        sat:req.body.sat,
-        sun:req.body.sun,
-        start_time:req.body.StartTime,
-        end_time:req.body.EndTime,
-        daterange:req.body.daterange
+        all:postUser.all,
+        mon:postUser.mon,
+        tue:postUser.tue,
+        wed:postUser.wed,
+        thu:postUser.thu,
+        fri:postUser.fri,
+        sat:postUser.sat,
+        sun:postUser.sun,
+        start_time:postUser.StartTime,
+        end_time:postUser.EndTime,
+        daterange:postUser.daterange
 	} 
 	
 	console.log(newLeaser);
