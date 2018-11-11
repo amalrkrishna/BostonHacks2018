@@ -64,6 +64,7 @@
             <fieldset>
                 <form action="/jam" method="POST">
                     <img src="ParknGo_Logo.png" class="img-fluid" alt="Responsive image">
+                    <input type="button" class="btn btn-info" value="Renter" onclick="window.open('renter','_self');">
                     <legend><b>Share your parking spot and </b></legend>
                     <legend><b>save your city.</b></legend>
                     <p>
@@ -84,7 +85,7 @@
         
                         <input class="form-control input-sm" type="text" name="Amount" placeholder="Price (per hour)"><br>
         
-                        <input class="form-control input-sm" type="text" name="daterange" placeholder="Date range (11/01/2018 - 11/07/2018)"/><br>
+                        <input class="form-control input-sm" type="text" name="daterange" placeholder="Date range (MM/DD/YYYY - MM/DD/YYYY)"/><br>
         
                         <select class="form-control input-small" name='StartTime'>
                             <option value="" disabled selected>Start time</option>
