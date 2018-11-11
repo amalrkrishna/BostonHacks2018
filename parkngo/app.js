@@ -27,8 +27,8 @@ var leaserSchema = new mongoose.Schema({
 	latitude: Number,
     longitude: Number,
     // added start_time and end_time here
-    start_time: Date,
-    end_time: Date,
+    start_time: Number,
+    end_time: Number,
     mon: Number,
     tue: Number,
     wed: Number,
@@ -36,7 +36,9 @@ var leaserSchema = new mongoose.Schema({
     fri: Number,
     sat: Number,
     sun: Number,
-    daterange: String
+
+    start_date: String,
+    end_date: String
 });
 
 var renterSchema = new mongoose.Schema({
@@ -134,7 +136,8 @@ app.post("/auth", function(req,  res){
 		transaction_id:req.body._id
 	} 
 	
-	console.log(newPayment);
+    console.log(newPayment);
+    
 thisPayment.create(newPayment, function(err, location){
 		if(err){
 			console.log(err);
@@ -159,7 +162,12 @@ app.get('/new', function(req, res) {
         res.redirect("/");
         wipe();
     } else {
-    
+    var start_date = postUser.daterange.split(" - ")[0]
+    var end_date = postUser.daterange.split(" - ")[1]
+
+    var start_date = new Date(start_date);
+    var end_date = new Date(end_date);
+
 	var newLeaser = {
 		name:postUser.name,
 		amount:postUser.amount,
@@ -173,18 +181,20 @@ app.get('/new', function(req, res) {
         fri:postUser.fri,
         sat:postUser.sat,
         sun:postUser.sun,
-        start_time:postUser.StartTime,
-        end_time:postUser.EndTime,
-        daterange:postUser.daterange
+        start_time:postUser.start_time,
+        end_time:postUser.end_time,
+        start_date:start_date,
+        end_date:end_date
 	} 
 	
-	console.log(newLeaser);
+    console.log(newLeaser);
+    
 thisLeaser.create(newLeaser, function(err, location){
 		if(err){
 			console.log(err);
 			wipe();
 		} else {
-			console.log("added to new_location_collection");
+			console.log("added to leaser_dataset_collection");
 			wipe();
 		}
 
