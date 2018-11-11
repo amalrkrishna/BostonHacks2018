@@ -27,13 +27,14 @@ var leaserSchema = new mongoose.Schema({
     // added start_time and end_time here
     start_time: Number,
     end_time: Number,
-    mon: Number,
-    tue: Number,
-    wed: Number,
-    thu: Number,
-    fri: Number,
-    sat: Number,
-    sun: Number,
+    days:String,
+    //mon: Number,
+    //tue: Number,
+    //wed: Number,
+    //thu: Number,
+    //fri: Number,
+    //sat: Number,
+    //sun: Number,
     start_date: String,
     end_date: String
 });
@@ -82,13 +83,14 @@ app.post('/jam', function(req, res){
         name:req.body.Name,
         address:req.body.Address,
         // OC: add start-time and end_time
-        mon:req.body.mon,
-        tue:req.body.tue,
-        wed:req.body.wed,
-        thu:req.body.thu,
-        fri:req.body.fri,
-        sat:req.body.sat,
-        sun:req.body.sun,
+        //mon:req.body.mon,
+        //tue:req.body.tue,
+        //wed:req.body.wed,
+        //thu:req.body.thu,
+        //fri:req.body.fri,
+        //sat:req.body.sat,
+        //sun:req.body.sun,
+        days:req.body.days,
         amount:req.body.Amount,
         start_time:req.body.StartTime,
         end_time:req.body.EndTime,
@@ -102,13 +104,14 @@ app.post('/jam_filter', function(req, res){
     postUser = {
         address:req.body.Address,
         // OC: add start-time and end_time
-        mon:req.body.mon,
-        tue:req.body.tue,
-        wed:req.body.wed,
-        thu:req.body.thu,
-        fri:req.body.fri,
-        sat:req.body.sat,
-        sun:req.body.sun,
+        days:req.body.days,
+        //mon:req.body.mon,
+        //tue:req.body.tue,
+        //wed:req.body.wed,
+        //thu:req.body.thu,
+        //fri:req.body.fri,
+        //sat:req.body.sat,
+        //sun:req.body.sun,
         min_amount:req.body.MinAmount,
         max_amount:req.body.MaxAmount,
         start_time:req.body.StartTime,
@@ -143,8 +146,6 @@ app.post('/jam_filter', function(req, res){
                 end_time: { $lte: postUser.end_time},
                 start_date: { $gte: new Date(start_date)},
                 end_date: { $lte: new Date(start_date)}},
-
-
                 function(err, theLeaser){
             if(err){
                 console.log("Database error");
@@ -244,19 +245,20 @@ app.get('/new', function(req, res) {
 
     var start_date = new Date(start_date);
     var end_date = new Date(end_date);
-
+    console.log(postUser)
 	var newLeaser = {
 		name:postUser.name,
 		amount:postUser.amount,
 		latitude:thisLat,
         longitude:thisLng,
-        mon:postUser.mon,
-        tue:postUser.tue,
-        wed:postUser.wed,
-        thu:postUser.thu,
-        fri:postUser.fri,
-        sat:postUser.sat,
-        sun:postUser.sun,
+        days:postUser.days,
+        //mon:postUser.mon,
+        //tue:postUser.tue,
+        //wed:postUser.wed,
+        //thu:postUser.thu,
+        //fri:postUser.fri,
+        //sat:postUser.sat,
+        //sun:postUser.sun,
         start_time:postUser.start_time,
         end_time:postUser.end_time,
         start_date:start_date,
