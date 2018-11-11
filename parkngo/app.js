@@ -49,6 +49,16 @@ var renterSchema = new mongoose.Schema({
 	},
 });
 
+var paymentSchema = new mongoose.Schema({
+    dataValue: String,
+    dataDescriptor: String,
+    transaction_id: String,
+    date: {
+		type: Date,
+		default: Date.now(),
+	},
+});
+
 var requestAPI; 
 var postUser;
 var thisLat;
@@ -65,6 +75,7 @@ function wipe() {
 
 var thisLeaser = mongoose.model("leaser_database", leaserSchema);
 var thisRenter = mongoose.model("renter_database", renterSchema);
+var thisPayment = mongoose.model("new_payment_collection", paymentSchema);
 
 app.post('/jam', function(req, res){
     console.log("1");
@@ -117,14 +128,14 @@ app.get("/auth", function(req, res){
 
 app.post("/auth", function(req,  res){
     console.log(req.body);
-    var newRenter= {
+    var newPayment= {
 		dataValue:req.body.dataValue,
 		dataDescriptor:req.body.dataDescriptor,
 		transaction_id:req.body._id
 	} 
 	
-	console.log(newRenter);
-thisRenter.create(newRenter, function(err, location){
+	console.log(newPayment);
+thisPayment.create(newPayment, function(err, location){
 		if(err){
 			console.log(err);
 		} else {
