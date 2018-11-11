@@ -15,9 +15,7 @@ var mongoose = require("mongoose");
 mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database", { useNewUrlParser: true });
 mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds157923.mlab.com:57923/renter_database", { useNewUrlParser: true });
 
-
 app.set('view engine', 'ejs');
-
 
 var leaserSchema = new mongoose.Schema({
 	name: String,
@@ -36,7 +34,6 @@ var leaserSchema = new mongoose.Schema({
     fri: Number,
     sat: Number,
     sun: Number,
-
     start_date: String,
     end_date: String
 });
@@ -101,6 +98,78 @@ app.post('/jam', function(req, res){
     res.redirect("address");
 });
 
+app.post('/jam_filter', function(req, res){
+    console.log("filter");
+    postUser = {
+        address:req.body.Address,
+        // OC: add start-time and end_time
+        all:req.body.all,
+        mon:req.body.mon,
+        tue:req.body.tue,
+        wed:req.body.wed,
+        thu:req.body.thu,
+        fri:req.body.fri,
+        sat:req.body.sat,
+        sun:req.body.sun,
+        min_amount:req.body.MinAmount,
+        max_amount:req.body.MaxAmount,
+        start_time:req.body.StartTime,
+        end_time:req.body.EndTime,
+        daterange:req.body.daterange
+    }
+    console.log(postUser);
+    //res.redirect("renter");
+
+    var query = postUser.address;
+    
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query
+     + "&key=AIzaSyAsGx132XMucPF5R85zEnF_aqnqBZfThLw";
+     
+    request(url, function(error, response, body){
+        if(!error && response.statusCode === 200){
+            requestAPI = JSON.parse(body);
+            thisLat = requestAPI.results[0].geometry.location.lat;
+            thisLng = requestAPI.results[0].geometry.location.lng;
+            console.log(thisLat, thisLng)
+            thisLeaser.find({amount: { $gte: postUser.min_amount },
+                amount: { $lte: postUser.max_amount},
+                latitude: { $lte: thisLat+0.01449},
+                latitude: { $gte: thisLat-0.01449},
+                longitude: { $lte: thisLng+0.0181},
+                longitude: { $gte: thisLng-0.0181}},
+                function(err, theLeaser){
+            if(err){
+                console.log("Database error");
+                console.log(err);
+                wipe();
+            } else {
+                res.render("renter", {locations:theLeaser})
+                //Serves up renter.ejs and collects user input
+            }
+            });
+        }
+    })
+});
+
+app.get("/address2", function(req, res){
+    console.log("2");
+    var query = postUser.address;
+    
+    var url = "https://maps.googleapis.com/maps/api/geocode/json?address=" + query
+     + "&key=AIzaSyAsGx132XMucPF5R85zEnF_aqnqBZfThLw";
+     
+    request(url, function(error, response, body){
+        if(!error && response.statusCode === 200){
+            requestAPI = JSON.parse(body);
+            thisLat = requestAPI.results[0].geometry.location.lat;
+            thisLng = requestAPI.results[0].geometry.location.lng;
+            console.log(thisLat);
+            console.log(thisLng);
+        }
+    })
+    
+    res.redirect('new');
+});
 
 app.get("/address", function(req, res){
     console.log("2");
@@ -124,7 +193,6 @@ app.get("/address", function(req, res){
 
 app.get("/auth", function(req, res){
     console.log("GET request @ /auth");
-    
     res.render("auth-net-test", {transaction_id:req.query._id});
 });
 
@@ -162,6 +230,7 @@ app.get('/new', function(req, res) {
         res.redirect("/");
         wipe();
     } else {
+
     var start_date = postUser.daterange.split(" - ")[0]
     var end_date = postUser.daterange.split(" - ")[1]
 
@@ -187,9 +256,9 @@ app.get('/new', function(req, res) {
         end_date:end_date
 	} 
 	
-    console.log(newLeaser);
+    //console.log(newLeaser);
     
-thisLeaser.create(newLeaser, function(err, location){
+    thisLeaser.create(newLeaser, function(err, location){
 		if(err){
 			console.log(err);
 			wipe();
@@ -203,10 +272,6 @@ thisLeaser.create(newLeaser, function(err, location){
 }
     }, 1500);
     });
-
-
-
-
 
 
 app.get("/", function(req, res){
@@ -225,7 +290,7 @@ app.get("/", function(req, res){
 
 app.get("/renter", function(req, res){
     console.log("5");
-        thisRenter.find({}, function(err, theLeaser){
+        thisLeaser.find({}, function(err, theLeaser){
         if(err){
             console.log("Database error");
             console.log(err);
@@ -236,7 +301,6 @@ app.get("/renter", function(req, res){
         }
         });
 });
-
 
 app.get("*", function(req, res){
     console.log("6");
