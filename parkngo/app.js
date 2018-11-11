@@ -113,20 +113,6 @@ app.post('/jam_filter', function(req, res){
     var start_date = postUser.daterange.split(" - ")[0];
     var end_date = postUser.daterange.split(" - ")[1];
 
-    //var query =  getJedisQuery(postUser.min_amount, postUser.max_amount, postUser.start_time,
-    //                            postUser.end_time);
-    //    query.exec(function(err, jedis){
-    //        if(err){
-    //            console.log("Database error");
-    //            console.log(err);
-    //             wipe();
-    //        } else {
-    //            res.render("renter", {locations:jedis})
-    //            //Serves up renter.ejs and collects user input
-   // }
-    //});
-
-    console.log(postUser);
     thisLeaser.
         find().
         where('amount').gte(postUser.min_amount).
@@ -143,11 +129,12 @@ app.post('/jam_filter', function(req, res){
                          wipe();
             } else {
                         res.render("renter", {locations:theLeaser})
-                        //Serves up renter.ejs and collects user input
             }
     });
-});
 
+    */
+});
+ 
 app.get("/address2", function(req, res){
     console.log("2");
     var query = postUser.address;
