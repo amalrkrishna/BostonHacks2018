@@ -82,10 +82,10 @@
                   <input class="form-control input-sm" type="text" name="MinAmount" placeholder="Minimum Amount"><br>
                   <input class="form-control input-sm" type="text" name="MaxAmount" placeholder="Maximum Amount"><br>
 
+                  <input class="form-control input-sm" type="text" name="daterange" placeholder="Date range (MM/DD/YYYY - MM/DD/YYYY)"/><br>
 
-                  Start Time: 
-
-                  <select class="input-small" name='StartTime'>
+                  <select class="form-control input-small" name='StartTime'>
+                      <option value="" disabled selected>Start time</option>
                       <option value="0">0</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -110,11 +110,10 @@
                       <option value="21">21</option>
                       <option value="22">22</option>
                       <option value="23">23</option>
-                  </select>
-
-                  End Time: 
-
-                  <select class="input-small" name='EndTime'>
+                  </select><br>
+  
+                  <select class="form-control" name='EndTime'>
+                      <option value="" disabled selected>End time</option>
                       <option value="0">0</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -143,7 +142,7 @@
 
                 <br>
             </p>
-						<button class="btn btn-primary btn-dark btn-block">Submit</button>
+						<button class="btn btn-primary btn-dark btn-block">Search</button>
 						<br>
             </form>
             </div>
@@ -200,9 +199,13 @@
               var loopLat = rows[i].latitude;
               var loopLng = rows[i].longitude;
               addMarkerToGroup(group, {lat:loopLat, lng:loopLng},
-      '<div><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = "' + rows[i]._id + '"/><button>Buy</button></form></a>' +
-      '<div><p>' + rows[i].title + '</p>' + 
-      '</div>' + rows[i].name + '<br> $' + rows[i].amount + '<br><br>' + rows[i].body + '</div>');
+              '<div class="container"></div class="bg-transparent"><h6 small> Name - ' + rows[i].name + 
+                      '<br> Price - $' + rows[i].amount + 
+                      '<br> Start time -' + rows[i].start_time + 
+                      '<br> End time - ' + rows[i].end_time  + 
+                      '<br> End date - ' + rows[i].end_date  + 
+                      '<br> Start date - ' + rows[i].start_date + '</div><br></h6>' +
+                      '<div ><form action="/auth" method="GET"><input type ="hidden" name = "_id" value = ""/><button class="btn btn-primary btn-dark btn-block">Buy</button></form></a></div>' );
           }
   }
 
