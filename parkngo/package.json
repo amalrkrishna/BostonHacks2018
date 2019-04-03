@@ -9,25 +9,22 @@
     "yarn": "1.12.3"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcrypt": "^3.0.5",
     "body-parser": "^1.18.3",
     "compat": "^1.0.4",
+    "cookie-parser": "^1.4.4",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
+    "express-flash": "0.0.2",
+    "express-session": "^1.15.6",
     "firebase": "^5.5.3",
-    "firebase-admin": "^6.0.0",
-    "mongoose": "^5.3.1",
+    "firebase-admin": "^6.5.1",
+    "mongoose": "^5.4.21",
     "mtr-datepicker": "^0.3.7",
     "request": "^2.88.0",
     "timepicker.js": "^2.4.0"
-  },
-  "devDependencies": {},
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
-  },
-  "author": "",
-  "license": "ISC"
+  }
 }
