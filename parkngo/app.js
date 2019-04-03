@@ -1,14 +1,16 @@
-var express = require("express");
-var app = express();
-app.use(express.static("public"));
-var request = require('request');
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended: true}));
-var mongoose = require("mongoose");
+const express = require("express");
+const app = express();
+const request = require('request');
+const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 //Implements mongoose to communicate with MongoDB from within node.js
 mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds159273.mlab.com:59273/leaser_database", { useNewUrlParser: true });
 //mongoose.connect("mongodb://bostonhacks:bostonhacks2018@ds157923.mlab.com:57923/renter_database", { useNewUrlParser: true });
 app.set('view engine', 'ejs');
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
+
+
 var leaserSchema = new mongoose.Schema({
 	name: String,
 	title: String,
